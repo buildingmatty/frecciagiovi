@@ -1,10 +1,16 @@
 package com.frecciagiovi.model;
 
-import java.time.LocalDateTime;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Utente {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
@@ -13,7 +19,7 @@ public class Utente {
 
     private String email;
 
-    private LocalDateTime dataNascita;
+    private LocalDate dataNascita;
 
     public Utente(){}
 
@@ -49,11 +55,11 @@ public class Utente {
         this.email = email;
     }
 
-    public LocalDateTime getDataNascita() {
+    public LocalDate getDataNascita() {
         return dataNascita;
     }
 
-    public void setDataNascita(LocalDateTime dataNascita) {
+    public void setDataNascita(LocalDate dataNascita) {
         this.dataNascita = dataNascita;
     }
 
