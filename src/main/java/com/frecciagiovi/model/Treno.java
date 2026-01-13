@@ -2,28 +2,33 @@ package com.frecciagiovi.model;
 
 import jakarta.persistence.*;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
+@Table(name = "treno")
 public class Treno {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String destinazione;
-
     private LocalDateTime oraPartenza;
 
     private String binario;
 
-    private LocalDateTime durataTratta;
+    private Duration durataTratta;
+
+    @ManyToOne
+    @JoinColumn( name = "destinazione_id")
+    private Stazione destinazione;
 
     @ManyToOne
     @JoinColumn(name = "stazione_id")
     private Stazione stazione;
 
-    private String numeriTreno;
+    private String numeroTreno;
 
     public Treno() {}
 
@@ -35,11 +40,11 @@ public class Treno {
         this.id = id;
     }
 
-    public String getDestinazione() {
+    public Stazione getDestinazione() {
         return destinazione;
     }
 
-    public void setDestinazione(String destinazione) {
+    public void setDestinazione(Stazione destinazione) {
         this.destinazione = destinazione;
     }
 
@@ -59,11 +64,11 @@ public class Treno {
         this.binario = binario;
     }
 
-    public LocalDateTime getDurataTratta() {
+    public Duration getDurataTratta() {
         return durataTratta;
     }
 
-    public void setDurataTratta(LocalDateTime durataTratta) {
+    public void setDurataTratta(Duration durataTratta) {
         this.durataTratta = durataTratta;
     }
 
@@ -75,12 +80,12 @@ public class Treno {
         this.stazione = stazione;
     }
 
-    public String getNumeriTreno() {
-        return numeriTreno;
+    public String getNumeroTreno() {
+        return numeroTreno;
     }
 
-    public void setNumeriTreno(String numeriTreno) {
-        this.numeriTreno = numeriTreno;
+    public void setNumeroTreno(String numeroTreno) {
+        this.numeroTreno = numeroTreno;
     }
 
     @Override
@@ -104,7 +109,7 @@ public class Treno {
                 ", binario='" + binario + '\'' +
                 ", durataTratta=" + durataTratta +
                 ", stazione=" + stazione +
-                ", numeriTreno='" + numeriTreno + '\'' +
+                ", numeroTreno='" + numeroTreno + '\'' +
                 '}';
     }
 }

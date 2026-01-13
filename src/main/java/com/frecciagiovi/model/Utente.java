@@ -1,12 +1,12 @@
 package com.frecciagiovi.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
+@Table(name = "utente")
 public class Utente {
 
     @Id
@@ -20,6 +20,10 @@ public class Utente {
     private String email;
 
     private LocalDate dataNascita;
+
+    @ManyToOne
+    @JoinColumn(name = "stazion_id")
+    private Stazione stazione;
 
     public Utente(){}
 
@@ -63,11 +67,23 @@ public class Utente {
         this.dataNascita = dataNascita;
     }
 
+    public void setStazione(Stazione stazione) {
+        this.stazione = stazione;
+    }
+    public Stazione getStazione() {
+        return stazione;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Utente utente = (Utente) o;
         return Objects.equals(id, utente.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 
     @Override

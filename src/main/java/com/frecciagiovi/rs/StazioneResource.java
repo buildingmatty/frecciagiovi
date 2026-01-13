@@ -5,8 +5,6 @@ import com.frecciagiovi.dao.StazioneDao;
 import com.frecciagiovi.model.Stazione;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-
-import javax.print.attribute.standard.Media;
 import java.util.List;
 
 @Path("/stazioni")
@@ -27,12 +25,21 @@ public class StazioneResource {
 
         try {
             Stazione s = dao.getStazioneById(id);
-            if(s!=null){
+            if(s==null){
                 throw new NotFoundException("Stazione non trovata" + id);
             }
             return s;
         } finally {
             dao.close();
+        }
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/")
+    public Stazione createStazione(Stazione s){
+        if (s == null || s.getNomeStazione() == null) {
+
         }
     }
 }

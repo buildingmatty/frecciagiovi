@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "stazione")
+
 public class Stazione {
 
     @Id
@@ -13,10 +16,10 @@ public class Stazione {
 
     private String nomeStazione;
 
-    @OneToMany(mappedBy = "")
+    @OneToMany(mappedBy = "stazione")
     private List<Utente> utentiList;
 
-    @OneToMany(mappedBy = "")
+    @OneToMany(mappedBy = "stazione")
     private List<Treno> trenoList;
 
     public Stazione() {}

@@ -1,6 +1,6 @@
 package com.frecciagiovi.rs;
 
-import com.frecciagiovi.dao.DaoUtil;
+import com.frecciagiovi.repository.JpaUtil;
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 import org.apache.logging.log4j.LogManager;
@@ -19,7 +19,7 @@ public class RestApplication extends Application {
 
         logger.info("Avvio della REST application");
 
-        DaoUtil.init();
+        JpaUtil.init();
 
         HashSet<Class<?>> classes = new HashSet<>();
         classes.add(StazioneResource.class);
