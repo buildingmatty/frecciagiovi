@@ -1,7 +1,10 @@
 package com.frecciagiovi.business;
+import com.frecciagiovi.dto.StazioneDTO;
+import com.frecciagiovi.dto.StazioneMapper;
 import com.frecciagiovi.model.Stazione;
 import com.frecciagiovi.repository.JpaUtil;
 import com.frecciagiovi.repository.StazioneRepository;
+import com.frecciagiovi.repository.TrenoRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,20 +14,37 @@ public class StazioneManager {
 
     private static final Logger logger = LogManager.getLogger(StazioneManager.class);
 
-    public static Stazione getStazioneById(Long id) {
+    public static StazioneDTO getStazioneById(Long id) {
         if (id == null || id <= 0) {
             throw new IllegalArgumentException("Id non valido");
         }
 
         var em = JpaUtil.getEntityManager();
-        var repo = new StazioneRepository(em);
 
         try {
-            return repo.findById(id).orElse(null);
+            var stazioneRepo = new StazioneRepository(em);
+            var trenoRepo = new TrenoRepository(em);
+
+            // 1) prendo la stazione (ENTITY)
+            var stazioneOpt = stazioneRepo.findById(id); // <-- vedi sotto
+            if (stazioneOpt.isEmpty()) {
+                return null;
+            }
+
+            var stazione = stazioneOpt.get();
+
+            // 2) prendo i treni della stazione con query dedicata
+            var treni = trenoRepo.findByStazioneId(id);
+
+            // 3) mapping DTO (stazione + treni)
+            return StazioneMapper.toDetailDTO(stazione, treni);
+
         } finally {
             em.close();
         }
     }
+
+
 
     public static List<Stazione> getStazioni() {
         var em = JpaUtil.getEntityManager();
@@ -100,7 +120,7 @@ public class StazioneManager {
 
             String nuovoNome = payload.getNomeStazione().trim();
 
-            // 4️⃣ Controllo duplicati SOLO se il nome cambia
+            //Controllo duplicati SOLO se il nome cambia
             if (!nuovoNome.equals(existing.getNomeStazione())
                     && repo.existsByNome(nuovoNome)) {
                 throw new IllegalStateException(

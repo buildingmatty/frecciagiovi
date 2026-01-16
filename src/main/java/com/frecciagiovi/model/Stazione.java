@@ -1,5 +1,6 @@
 package com.frecciagiovi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -16,7 +17,8 @@ public class Stazione {
 
     private String nomeStazione;
 
-    @OneToMany(mappedBy = "stazione")
+    @OneToMany(mappedBy = "stazione", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Utente> utentiList;
 
     @OneToMany(mappedBy = "stazione")

@@ -29,6 +29,18 @@ public class TrenoRepository {
         return Optional.ofNullable(entityManager.find(Treno.class, id));
     }
 
+    public List<Treno> findByStazioneId(Long stazioneId) {
+        return entityManager.createQuery(
+                        "SELECT t " +
+                                "FROM Treno t " +
+                                "WHERE t.stazione.id = :id ORDER BY t.oraPartenza",
+                        Treno.class
+                )
+                .setParameter("id", stazioneId)
+                .getResultList();
+    }
+
+
     public List<Treno> findAllOrderByOraPartenza() {
         return entityManager
                 .createQuery("""

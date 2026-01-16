@@ -1,6 +1,10 @@
 package com.frecciagiovi.dto;
 
 import com.frecciagiovi.model.Stazione;
+import com.frecciagiovi.model.Treno;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class StazioneMapper {
 
@@ -23,4 +27,23 @@ public class StazioneMapper {
         s.setNomeStazione(dto.getNomeStazione());
         return s;
     }
+
+    public static StazioneDTO toDetailDTO(Stazione s, List<Treno> treniList) {
+        if (s == null) {
+            return null;
+        }
+
+        StazioneDTO dto = new StazioneDTO();
+        dto.setId(s.getId());
+        dto.setNomeStazione(s.getNomeStazione());
+
+        dto.setTreniList(
+                treniList == null
+                        ? java.util.List.of()
+                        : treniList.stream().map(TrenoMapper::toDTO).toList()
+        );
+
+        return dto;
+    }
+
 }
