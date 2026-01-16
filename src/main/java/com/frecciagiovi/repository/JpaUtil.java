@@ -1,4 +1,4 @@
-package com.frecciagiovi.persistence;
+package com.frecciagiovi.repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;

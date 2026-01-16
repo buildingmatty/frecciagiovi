@@ -73,8 +73,6 @@ public class Stazione {
         return "Stazione{" +
                 "id=" + id +
                 ", nomeStazione='" + nomeStazione + '\'' +
-                ", utentiList=" + utentiList +
-                ", trenoList=" + trenoList +
                 '}';
     }
 }

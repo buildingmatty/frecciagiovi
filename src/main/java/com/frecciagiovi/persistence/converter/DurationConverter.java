@@ -4,6 +4,7 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import java.time.Duration;
 
+//Classe dedicata al convertitore di Duration
 @Converter(autoApply = true)
 public class DurationConverter implements AttributeConverter<Duration, Long> {
 
